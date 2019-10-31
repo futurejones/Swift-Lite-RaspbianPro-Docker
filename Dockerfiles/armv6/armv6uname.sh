@@ -1,3 +1,3 @@
 #!/bin/bash
 
-/bin/uname.orig "$@" | sed 's/armv7l/armv6l/g'
+/bin/uname.orig "$@" | sed 's/arm64/armv6l/g'
