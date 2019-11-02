@@ -9,6 +9,22 @@ Based on https://github.com/uraimo/buildSwiftOnARMInfra
 
 ## Usage
 
+Launch an AWS server instance - Ubuntu Server 18.04 LTS (HVM) - 64-bit (Arm) - 100GB SSD
+
+Install git
+```
+sudo apt update && sudo apt install git
+```
+
+Clone repository.
+```
+    git clone https://github.com/futurejones/Swift-Lite-RaspbianPro-Docker.git
+```
+Install Docker
+```
+    ./install_docker.sh
+```
+
 Build your image using the Dockerfile provided:
 
 ```
