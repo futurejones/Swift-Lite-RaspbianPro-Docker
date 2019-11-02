@@ -39,7 +39,7 @@ To complete the process, create an interactive container:
 docker run -i -t --name raspbianpro --hostname raspbianpro raspbianpro /bin/bash
 ```
 
-And then run `./patch_5.1.1_RELEASE.sh` to checkout the latest supported Swift release, followed by `./build_swift-lite.sh` to start building Swift-Lite.
+And then run `./build_swift-lite.sh` to start building Swift-Lite.
 
 ### Supports all Raspberry Pi's running Raspbian Buster
 
