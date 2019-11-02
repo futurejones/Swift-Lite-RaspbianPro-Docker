@@ -8,9 +8,6 @@ COPY armv6uname.sh .
 RUN mv /bin/uname /bin/uname.orig \
     && mv armv6uname.sh /bin/uname
 
-COPY install_docker.sh .
-RUN ./install_docker.sh
-
 WORKDIR home
 
 RUN git clone https://github.com/futurejones/buildSwiftOnARM.git
