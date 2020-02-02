@@ -25,10 +25,10 @@ Install Docker
     ./install_docker.sh
 ```
 
-Build your image using the Dockerfile provided:
+Choose Swift version and build your image using the Dockerfile provided:
 
 ```
-    docker build . --file Dockerfile.armv6.raspbian.buster --tag raspbianpro
+    docker build . --file Dockerfile --tag raspbianpro
 ```
 
 Once the build phase completes, the resulting image will contain the Swift repository and all the dependencies needed to build Swift-Lite.
