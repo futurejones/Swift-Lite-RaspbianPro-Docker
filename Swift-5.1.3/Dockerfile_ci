@@ -17,4 +17,5 @@ RUN cd buildSwiftOnARM \
     && ./patch_5.1.3_RELEASE.sh \
     && chmod +x build_swift-lite.sh
 
-CMD ["home/buildSwiftOnArm/build_swift-lite.sh"]
+#CMD ["/home/buildSwiftOnArm/build_swift-lite.sh"]
+CMD ["ls"]
