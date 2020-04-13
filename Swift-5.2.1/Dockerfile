@@ -11,8 +11,5 @@ RUN mv /bin/uname /bin/uname.orig \
 WORKDIR home
 
 RUN git clone https://github.com/uraimo/buildSwiftOnARM
-RUN cd buildSwiftOnARM
-RUN git checkout swift-5.2
-COPY forcearmv6.diff ./buildSwiftOnARM/swift.diffs/aarch32/
-RUN ./clone.sh
-RUN ./checkoutRelease.sh
+COPY forcearmv6.diff .
+
