@@ -38,6 +38,10 @@ To complete the process, create an interactive container:
 ```
 docker run -i -t --name raspbianpro --hostname raspbianpro raspbianpro /bin/bash
 ```
+With 'output' volume:-
+```
+docker run --name raspbianpro --hostname raspbianpro -v /home/[USER]/output:/output raspbianpro
+```
 
 Run `./build_swift-lite.sh` to start building Swift-Lite.
 
