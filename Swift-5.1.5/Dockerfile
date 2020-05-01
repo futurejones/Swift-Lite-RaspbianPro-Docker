@@ -1,5 +1,8 @@
 FROM balenalib/rpi-raspbian:buster 
 
+# Volume to store output package and build logs.
+VOLUME ["/output"]
+
 RUN apt-get update \
     && apt-get upgrade \
     && apt-get install -y git sed wget curl

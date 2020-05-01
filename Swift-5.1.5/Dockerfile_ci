@@ -1,4 +1,7 @@
-FROM balenalib/rpi-raspbian:buster 
+FROM balenalib/rpi-raspbian:buster
+
+# Volume to store output package and build logs.
+VOLUME ["/output"]
 
 RUN apt-get update \
     && apt-get upgrade \
@@ -17,5 +20,4 @@ RUN cd buildSwiftOnARM \
     && ./patch_5.1.5_RELEASE.sh \
     && chmod +x build_swift-lite.sh
 
-#CMD ["buildSwiftOnARM/build_swift-lite.sh"]
-CMD ["ls buildSwiftOnARM/"]
+CMD ["buildSwiftOnARM/build_swift-lite.sh"]
