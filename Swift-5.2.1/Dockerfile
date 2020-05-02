@@ -16,5 +16,6 @@ WORKDIR home
 RUN git clone https://github.com/futurejones/buildSwiftOnARM.git
 COPY forcearmv6.diff ./buildSwiftOnARM/swift.diffs/aarch32/
 RUN cd buildSwiftOnARM \
+    && git checkout swift-5.2-ci \
     && ./swift-5.2-RELEASE/clone_5.2_RELEASE.sh \
     && ./swift-5.2-RELEASE/patch_5.2_RELEASE.sh
