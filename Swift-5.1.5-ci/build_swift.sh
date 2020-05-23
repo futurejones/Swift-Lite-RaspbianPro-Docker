@@ -8,7 +8,7 @@ PACKAGE=/home/output/swift-${REL}-RELEASE-armv6-raspbian-buster_$today.tar.gz
 # run update-checkout to create symlink for LLVM Project
 #./swift-source/swift/utils/update-checkout --tag swift-5.1.5-RELEASE
 
-./swift-source/swift/utils/build-script \
+./swift/utils/build-script \
     -R \
     --build-subdir buildbot_linux --install-prefix=/usr \
     --install-destdir=${INSTALL_DIR} --installable-package=${PACKAGE} \
