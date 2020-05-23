@@ -2,8 +2,8 @@
 # For Jenkins pipeline
 FROM balenalib/rpi-raspbian:buster 
 
-RUN groupadd -g 998 build-user && \
-    useradd -m -r -u 998 -g build-user build-user
+#RUN groupadd -g 998 build-user && \
+#    useradd -m -r -u 998 -g build-user build-user
 
 ENV DEBIAN_FRONTEND="noninteractive"
 
@@ -56,6 +56,6 @@ RUN chmod +x armv6uname.sh
 RUN mv /bin/uname /bin/uname.orig \
     && mv armv6uname.sh /bin/uname
 
-USER build-user
+#USER build-user
 
-WORKDIR /home/build-user
+WORKDIR /home
