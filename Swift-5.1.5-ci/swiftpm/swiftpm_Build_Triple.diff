@@ -1,16 +1,16 @@
 diff --git a/Sources/Build/Triple.swift b/Sources/Build/Triple.swift
-index 1a0e3095..39eff944 100644
+index 1a0e3095..a65f3f9a 100644
 --- a/Sources/Build/Triple.swift
 +++ b/Sources/Build/Triple.swift
-@@ -35,6 +35,7 @@ public struct Triple {
-         case ppc64le
+@@ -36,6 +36,7 @@ public struct Triple {
+         case powerpc64le
          case s390x
          case aarch64
 +        case armv6
          case armv7
          case arm
      }
-@@ -127,7 +127,7 @@ public struct Triple {
+@@ -127,7 +128,7 @@ public struct Triple {
      public static let ppc64leLinux = try! Triple("powerpc64le-unknown-linux")
      public static let s390xLinux = try! Triple("s390x-unknown-linux")
      public static let arm64Linux = try! Triple("aarch64-unknown-linux")
@@ -20,10 +20,10 @@ index 1a0e3095..39eff944 100644
      public static let windows = try! Triple("x86_64-unknown-windows-msvc")
  
 diff --git a/Utilities/bootstrap b/Utilities/bootstrap
-index de47f92f..27fcfbf0 100755
+index 5f0478de..534398e2 100755
 --- a/Utilities/bootstrap
 +++ b/Utilities/bootstrap
-@@ -1015,8 +1015,8 @@ def main():
+@@ -1042,8 +1042,8 @@ def main():
              build_target = "s390x-unknown-linux"
          elif platform.machine() == 'ppc64le':
              build_target = 'powerpc64le-unknown-linux'
@@ -34,4 +34,3 @@ index de47f92f..27fcfbf0 100755
          elif platform.machine() == 'aarch64':
              build_target = 'aarch64-unknown-linux'
          else:
-
