@@ -4,7 +4,7 @@ index a4752f4..7da4517 100644
 +++ b/Sources/SPMUtility/FSWatch.swift
 @@ -441,12 +441,23 @@ public final class Inotify {
  // FIXME: <rdar://problem/45794219> Swift should provide shims for FD_ macros
- 
+
  private func FD_ZERO(_ set: inout fd_set) {
 -	set.__fds_bits = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 +   #if os(Linux) && arch(arm)
@@ -14,16 +14,16 @@ index a4752f4..7da4517 100644
 +   set.__fds_bits = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 +   #endif
  }
- 
+
  private func FD_SET(_ fd: Int32, _ set: inout fd_set) {
 -    let intOffset = Int(fd / 16)
 -    let bitOffset = Int(fd % 16)
-+    #if os(Linux) && arch(arm) 
++    #if os(Linux) && arch(arm)
 +    let sz: Int32 = 32 //Could this be only 32?
 +    #else
 +    let sz = 16
 +    #endif
-+    
++
 +    let intOffset = Int(fd / sz)
 +    let bitOffset = Int(fd % sz)
      let mask = 1 << bitOffset
@@ -75,7 +75,7 @@ index a4752f4..7da4517 100644
 +        case 29: return set.__fds_bits.29 & mask != 0
 +        case 30: return set.__fds_bits.30 & mask != 0
 +        case 31: return set.__fds_bits.31 & mask != 0
-+	#endif 
++	#endif
          default: return false
      }
  }
