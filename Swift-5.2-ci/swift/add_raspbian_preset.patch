@@ -1,0 +1,92 @@
+diff --git a/utils/build-presets.ini b/utils/build-presets.ini
+index be0cb56366c..896598cf195 100644
+--- a/utils/build-presets.ini
++++ b/utils/build-presets.ini
+@@ -9,7 +9,87 @@
+ ## See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
+ #
+ #===------------------------------------------------------------------------===#
++#===------------------------------------------------------------------------===#
++# Buildbots for Raspbian
++#===------------------------------------------------------------------------===#
++[preset: buildbot_raspbian]
++swift-install-components=autolink-driver;compiler;clang-builtin-headers;stdlib;swift-remote-mirror;sdk-overlay;dev
++install-destdir=%(install_destdir)s
++installable-package=%(installable_package)s
++build-subdir=buildbot_linux
++install-prefix=/usr
++
++lldb
++llbuild
++xctest
++foundation
++libdispatch
++swiftpm
++
++build-ninja
++install-swift
++install-lldb
++install-llbuild
++install-xctest
++install-foundation
++install-libdispatch
++install-swiftpm
++
++build-swift-static-stdlib
++build-swift-static-sdk-overlay
++
++release
++reconfigure
++#===-------------------------------------
++[preset: buildbot_raspbian,no_swiftpm]
++swift-install-components=autolink-driver;compiler;clang-builtin-headers;stdlib;swift-remote-mirror;sdk-overlay;dev
++install-destdir=%(install_destdir)s
++installable-package=%(installable_package)s
++build-subdir=buildbot_linux
++install-prefix=/usr
++
++lldb
++llbuild
++xctest
++foundation
++libdispatch
++
++build-ninja
++install-swift
++install-lldb
++install-llbuild
++install-xctest
++install-foundation
++install-libdispatch
++
++build-swift-static-stdlib
++build-swift-static-sdk-overlay
++
++release
++reconfigure
++#===-------------------------------------
++#===-------------------------------------
++[preset: buildbot_raspbian,lite]
++swift-install-components=autolink-driver;compiler;clang-builtin-headers;stdlib;swift-remote-mirror;sdk-overlay;dev
++install-destdir=%(install_destdir)s
++installable-package=%(installable_package)s
++build-subdir=buildbot_linux
++install-prefix=/usr
++
++foundation
++libdispatch
++
++build-ninja
++install-swift
++install-foundation
++install-libdispatch
+ 
++build-swift-static-stdlib
++build-swift-static-sdk-overlay
++
++release
++reconfigure
++#===-------------------------------------
+ #===------------------------------------------------------------------------===#
+ # Buildbots for Darwin OSes
+ #===------------------------------------------------------------------------===#
