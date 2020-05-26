@@ -1,0 +1,120 @@
+diff --git a/Sources/Build/Triple.swift b/Sources/Build/Triple.swift
+index 1a0e3095..a65f3f9a 100644
+--- a/Sources/Build/Triple.swift
++++ b/Sources/Build/Triple.swift
+@@ -36,6 +36,7 @@ public struct Triple {
+         case powerpc64le
+         case s390x
+         case aarch64
++        case armv6
+         case armv7
+         case arm
+     }
+@@ -127,7 +128,7 @@ public struct Triple {
+     public static let ppc64leLinux = try! Triple("powerpc64le-unknown-linux")
+     public static let s390xLinux = try! Triple("s390x-unknown-linux")
+     public static let arm64Linux = try! Triple("aarch64-unknown-linux")
+-    public static let armLinux = try! Triple("armv7-unknown-linux-gnueabihf")
++    public static let armLinux = try! Triple("armv6-unknown-linux-gnueabihf")
+     public static let android = try! Triple("armv7-unknown-linux-androideabi")
+     public static let windows = try! Triple("x86_64-unknown-windows-msvc")
+ 
+diff --git a/Sources/SPMUtility/FSWatch.swift b/Sources/SPMUtility/FSWatch.swift
+index 70b12765..374c9c6c 100644
+--- a/Sources/SPMUtility/FSWatch.swift
++++ b/Sources/SPMUtility/FSWatch.swift
+@@ -428,12 +428,23 @@ public final class Inotify {
+ // FIXME: <rdar://problem/45794219> Swift should provide shims for FD_ macros
+ 
+ private func FD_ZERO(_ set: inout fd_set) {
+-	set.__fds_bits = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
++   #if os(Linux) && arch(arm)
++   set.__fds_bits = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
++	             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
++   #else
++   set.__fds_bits = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
++   #endif
+ }
+ 
+ private func FD_SET(_ fd: Int32, _ set: inout fd_set) {
+-    let intOffset = Int(fd / 16)
+-    let bitOffset = Int(fd % 16)
++    #if os(Linux) && arch(arm)
++    let sz: Int32 = 32 //Could this be only 32?
++    #else
++    let sz = 16
++    #endif
++
++    let intOffset = Int(fd / sz)
++    let bitOffset = Int(fd % sz)
+     let mask = 1 << bitOffset
+     switch intOffset {
+         case 0: set.__fds_bits.0 = set.__fds_bits.0 | mask
+@@ -452,6 +463,24 @@ private func FD_SET(_ fd: Int32, _ set: inout fd_set) {
+         case 13: set.__fds_bits.13 = set.__fds_bits.13 | mask
+         case 14: set.__fds_bits.14 = set.__fds_bits.14 | mask
+         case 15: set.__fds_bits.15 = set.__fds_bits.15 | mask
++      	#if os(Linux) && arch(arm)
++        case 16: set.__fds_bits.16 = set.__fds_bits.16 | mask
++        case 17: set.__fds_bits.17 = set.__fds_bits.17 | mask
++        case 18: set.__fds_bits.18 = set.__fds_bits.18 | mask
++        case 19: set.__fds_bits.19 = set.__fds_bits.19 | mask
++        case 20: set.__fds_bits.20 = set.__fds_bits.20 | mask
++        case 21: set.__fds_bits.21 = set.__fds_bits.21 | mask
++        case 22: set.__fds_bits.22 = set.__fds_bits.22 | mask
++        case 23: set.__fds_bits.23 = set.__fds_bits.23 | mask
++        case 24: set.__fds_bits.24 = set.__fds_bits.24 | mask
++        case 25: set.__fds_bits.25 = set.__fds_bits.25 | mask
++        case 26: set.__fds_bits.26 = set.__fds_bits.26 | mask
++        case 27: set.__fds_bits.27 = set.__fds_bits.27 | mask
++        case 28: set.__fds_bits.28 = set.__fds_bits.28 | mask
++        case 29: set.__fds_bits.29 = set.__fds_bits.29 | mask
++        case 30: set.__fds_bits.30 = set.__fds_bits.30 | mask
++        case 31: set.__fds_bits.31 = set.__fds_bits.31 | mask
++	#endif
+         default: break
+     }
+ }
+@@ -477,6 +506,24 @@ private func FD_ISSET(_ fd: Int32, _ set: inout fd_set) -> Bool {
+         case 13: return set.__fds_bits.13 & mask != 0
+         case 14: return set.__fds_bits.14 & mask != 0
+         case 15: return set.__fds_bits.15 & mask != 0
++      	#if os(Linux) && arch(arm)
++        case 16: return set.__fds_bits.16 & mask != 0
++        case 17: return set.__fds_bits.17 & mask != 0
++        case 18: return set.__fds_bits.18 & mask != 0
++        case 19: return set.__fds_bits.19 & mask != 0
++        case 20: return set.__fds_bits.20 & mask != 0
++        case 21: return set.__fds_bits.21 & mask != 0
++        case 22: return set.__fds_bits.22 & mask != 0
++        case 23: return set.__fds_bits.23 & mask != 0
++        case 24: return set.__fds_bits.24 & mask != 0
++        case 25: return set.__fds_bits.25 & mask != 0
++        case 26: return set.__fds_bits.26 & mask != 0
++        case 27: return set.__fds_bits.27 & mask != 0
++        case 28: return set.__fds_bits.28 & mask != 0
++        case 29: return set.__fds_bits.29 & mask != 0
++        case 30: return set.__fds_bits.30 & mask != 0
++        case 31: return set.__fds_bits.31 & mask != 0
++	#endif
+         default: return false
+     }
+ }
+diff --git a/Utilities/bootstrap b/Utilities/bootstrap
+index 5f0478de..6dca0ed4 100755
+--- a/Utilities/bootstrap
++++ b/Utilities/bootstrap
+@@ -1042,10 +1042,10 @@ def main():
+             build_target = "s390x-unknown-linux"
+         elif platform.machine() == 'ppc64le':
+             build_target = 'powerpc64le-unknown-linux'
+-        elif platform.machine().startswith("armv7"):
+-            build_target = 'armv7-unknown-linux-gnueabihf'
++        elif platform.machine().startswith("arm"):
++            build_target = 'armv6-unknown-linux-gnueabihf'
+         elif platform.machine() == 'aarch64':
+-            build_target = 'aarch64-unknown-linux'
++            build_target = 'armv6-unknown-linux-gnueabihf'
+         else:
+             raise SystemExit("ERROR: unsupported machine:",platform.machine())
+     else:
