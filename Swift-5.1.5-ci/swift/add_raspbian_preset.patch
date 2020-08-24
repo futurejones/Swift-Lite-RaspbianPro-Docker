@@ -67,7 +67,7 @@ index be0cb56366c..896598cf195 100644
 +#===-------------------------------------
 +#===-------------------------------------
 +[preset: buildbot_raspbian,lite]
-+swift-install-components=autolink-driver;compiler;clang-builtin-headers;stdlib;swift-remote-mirror;sdk-overlay;dev
++swift-install-components=autolink-driver;compiler;clang-resource-dir-symlink;;stdlib;swift-remote-mirror;sdk-overlay;dev
 +install-destdir=%(install_destdir)s
 +installable-package=%(installable_package)s
 +build-subdir=buildbot_linux
