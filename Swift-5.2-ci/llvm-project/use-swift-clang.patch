@@ -1,0 +1,13 @@
+diff --git a/utils/build-script-impl b/utils/build-script-impl
+index b662c50b7cf..7889d4ba9e9 100755
+--- a/utils/build-script-impl
++++ b/utils/build-script-impl
+@@ -1761,6 +1761,8 @@ for host in "${ALL_HOSTS[@]}"; do
+ 
+                 cmake_options=(
+                     "${cmake_options[@]}"
++                    -DCMAKE_C_COMPILER="$(build_directory ${LOCAL_HOST} llvm)/bin/clang"
++                    -DCMAKE_CXX_COMPILER="$(build_directory ${LOCAL_HOST} llvm)/bin/clang++"
+                     -DCMAKE_C_FLAGS="$(swift_c_flags ${host})"
+                     -DCMAKE_CXX_FLAGS="$(swift_c_flags ${host})"
+                     -DCMAKE_C_FLAGS_RELWITHDEBINFO="-O2 -DNDEBUG"
